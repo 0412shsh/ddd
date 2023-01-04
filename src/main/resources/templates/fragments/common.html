@@ -2,10 +2,10 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="head">
+<head th:fragment="head(title)">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Church &mdash; Free Website Template, Free HTML5 Template by freehtml5.co</title>
+	<title th:text="${title}">DDD &mdash; Dear Diary :D</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -72,28 +72,27 @@
   <body>
   
     <!-- 메뉴바 시작 @@@@@@@@@@@@@@@@@@@@@@@@     -->
-	<nav class="fh5co-nav" role="navigation" th:fragment="menu">
+	<nav class="fh5co-nav" role="navigation" th:fragment="menu(active)">
 		<div class="container-wrap">
 			<div class="top-menu">
 				<div class="row">
 					<div class="col-md-12 col-offset-0 text-center">
-						<div id="fh5co-logo"><a href="index.html">Dear Diary :D</a></div>
+						<div id="fh5co-logo"><a href="index.html" th:href="@{/}">Dear Diary :D</a></div>
 					</div>
 					<div class="col-md-12 col-md-offset-0 text-center menu-1">
 						<ul>
-							<li class="active"><a href="index.html">Home</a></li>
+							<li class="div" th:classappend="${active} == 'home'? 'active'" ><a href="/" th:href="@{/}">Home</a></li>
 							<li><a href="sermons.html">About</a></li>
-							<li class="has-dropdown">
-								<a href="news.html">Diary</a>
+							<li class="has-dropdown" th:classappend="${active} == 'board'? 'active'" >
+								<a href="/board/list" th:href="@{/board/list}">Diary</a>
 								<ul class="dropdown">
-									<li><a href="#">Write</a></li>
-									<li><a href="#">Look</a></li>
+									<li><a href="#" >Write</a></li>
+									<li><a href="/board/list">Look</a></li>
 									<li><a href="#">Photo</a></li>
-									<li><a href="#"></a></li>
 								</ul>
 							</li>
-							<li><a href="events.html">Community</a></li>
-							<li><a href="about.html">Mypage</a></li>
+							<li class=""><a href="#" th:href="@{/}">Community</a></li>
+							<li><a href="contact.html">Mypage</a></li>
 							<li><a href="contact.html">Login</a></li>
 							<li><a href="#" class="donate">Logout</a></li>
 						</ul>
