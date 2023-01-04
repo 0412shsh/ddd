@@ -5,10 +5,7 @@ import com.pong.ddd.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,8 +27,20 @@ public class BoardController {
     }
 
     @GetMapping("/form")
-    public String form(Model model){
-        model.addAttribute("board", new Board());
+    public String form(Model model, @RequestParam(required = false) Long bno){
+        //@RequestParam 파라미터를 통해 값을 전달
+        if(bno == null) {
+            //bno가 없으면 form 작성하도록 빈 객체 주기 
+            model.addAttribute("board", new Board());
+        } else {
+            //bno가 있으면 jpa를 통해서 bno를 키값으로 해당 글 가져오기
+            // 조회되는 값이 없을 수 있음 orElse 처리
+            Board board = boardRepository.findById(bno).orElse(null);
+            model.addAttribute("board",board);
+            
+        }
+
+
         return "board/form";
     }
 
