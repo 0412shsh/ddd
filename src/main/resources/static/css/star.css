@@ -1,0 +1,25 @@
+#heart fieldset{
+    display: inline-block;
+    direction: rtl;
+    border:0;
+}
+#heart div legend{
+    text-align: right;
+}
+#heart input[type=radio]{
+    display: none;
+}
+#heart label{
+    font-size: 1.5em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+}
+#heart label:hover{
+    text-shadow: 0 0 0 rgba(255, 104, 205, 0.99);
+}
+#heart label:hover ~ label{
+    text-shadow: 0 0 0 rgba(255, 104, 205, 0.99);
+}
+#heart input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgba(255, 104, 205, 0.99);
+}

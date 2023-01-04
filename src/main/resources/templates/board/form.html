@@ -18,7 +18,7 @@
 
 
     <!-- 메뉴바 시작 @@@@@@@@@@@@@@@@@@@@@@@@     -->
-	<nav class="fh5co-nav" role="navigation" th:replace="fragments/common :: menu(board)">		
+	<nav class="fh5co-nav" role="navigation" th:replace="fragments/common :: menu(form)">		
 	</nav>
     <!-- 메뉴바 끝 @@@@@@@@@@@@@@@@@@@@@@@@     -->
 
@@ -57,42 +57,72 @@
 				</div>
 			</div>
 		<!-- 여기서 부터 board 내용 쓰기 @@@@@@@@@@@@@			-->
-		<div> 총 건수 : <span th:text="${#lists.size(boards)}"></span></div>	
+			<!-- form 시작 -->
 		
-		  <table class="table table-striped">
-			<thead>
-			  <tr>
-				<th scope="col">글번호</th>
-				<th scope="col">제목</th>
-				<th scope="col">작성자</th>
-				<th scope="col">작성일</th>
-			  </tr>
-			</thead>
-			<tbody>
-			  <tr th:each="board : ${boards}">
-				<th th:text="${board.bno}">1</th>
-				<td th:text="${board.title}">Mark</td>
-				<td th:text="${board.user_name}">Otto</td>
-				<td th:text="${board.write_date}">@mdo</td>
-			  </tr>
-			</tbody>
-		  </table>
-		  <!-- 글쓰기 버튼 -->
-		  <div class="col-md-12">
-			<div class="form-group text-right">
-				<button class="btn btn-primary btn-modify">쓰기</button>
-				<!-- <input type="submit" value="Send Message" class="btn btn-primary btn-modify"> -->
+			<div class="row">
+				
+				<div class="col-md-12 animate-box">
+					<div class="row">
+						<form action="#" th:action="@{/board/form}" th:object="${board}" method="post">
+						<div class="col-md-12">
+							<div class="form-group">
+								<input type="text" th:field="*{title}" class="form-control" placeholder="제목">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="text" th:field="*{user_name}" class="form-control" placeholder="글쓴이">
+							</div>
+						</div>
+						<div class="col-md-6 ">
+							<div class="form-group">
+								<input type="text" id='currentDate' th:field="*{write_date}" class="form-control" placeholder="작성일" readonly>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<textarea style="resize:none;" th:field="*{content}" name="" class="form-control" id="" cols="50" rows="25" placeholder="내용"></textarea>
+							</div>
+						</div>
+						
+
+						<link href="/css/star.css" rel="stylesheet"/>
+						
+						<div class="col-md-12" id="heart">
+							<span class="text-left">내 기분은? </span>
+							<fieldset>
+							
+							<input type="radio" name="reviewStar" value="5" id="rate1"><label
+								for="rate1" th:field="*{score}">♥</label>
+							<input type="radio" name="reviewStar" value="4" id="rate2"><label
+								for="rate2" th:field="*{score}">♥</label>
+							<input type="radio" name="reviewStar" value="3" id="rate3"><label
+								for="rate3" th:field="*{score}">♥</label>
+							<input type="radio" name="reviewStar" value="2" id="rate4"><label
+								for="rate4" th:field="*{score}">♥</label>
+							<input type="radio" name="reviewStar" value="1" id="rate5"><label
+								for="rate5" th:field="*{score}">♥</label>
+							</fieldset>
+						</div>
+						
+
+						<div class="col-md-12 text-right">
+							<div class="form-group">
+								<input type="submit" value="확인" class="btn btn-primary btn-modify">
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			
 			</div>
-		  </div>
-		  <!-- 글쓰기 버튼 -->
 
-
-		  
-
-
-
-		</div>	
-		<!-- 여기서 부터 board 내용 끝 @@@@@@@@@@@@@	
+		<!--form 끝  -->
+		</div>
+			
+			
+		
+		<!-- 여기서 부터 board 내용 끝 @@@@@@@@@@@@@	-->
             
 
 
@@ -118,6 +148,10 @@
 		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
 	</div>
 	
+	<script>
+		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);;
+	</script>
+
 	<!-- jQuery -->
 	<script src="/js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
