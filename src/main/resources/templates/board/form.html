@@ -64,7 +64,9 @@
 				<div class="col-md-12 animate-box">
 					<div class="row">
 						<form action="#" th:action="@{/board/form}" th:object="${board}" method="post">
-						<div class="col-md-12">
+							<input type="hidden" th:field="*{bno}">
+							<input type="hidden" id='currentDate' th:field="*{write_date}">
+							<div class="col-md-12">
 							<div class="form-group">
 								<input type="text" th:field="*{title}" class="form-control" placeholder="제목">
 							</div>
@@ -76,7 +78,7 @@
 						</div>
 						<div class="col-md-6 ">
 							<div class="form-group">
-								<input type="text" id='currentDate' th:field="*{write_date}" class="form-control" placeholder="작성일" readonly>
+								<div style="width: 473px; height: 50px;" class="form-control" th:text="${board.write_date}" ></div>
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -92,23 +94,23 @@
 							<span class="text-left">내 기분은? </span>
 							<fieldset>
 							
-							<input type="radio" name="reviewStar" value="5" id="rate1"><label
-								for="rate1" th:field="*{score}">♥</label>
-							<input type="radio" name="reviewStar" value="4" id="rate2"><label
-								for="rate2" th:field="*{score}">♥</label>
-							<input type="radio" name="reviewStar" value="3" id="rate3"><label
-								for="rate3" th:field="*{score}">♥</label>
-							<input type="radio" name="reviewStar" value="2" id="rate4"><label
-								for="rate4" th:field="*{score}">♥</label>
-							<input type="radio" name="reviewStar" value="1" id="rate5"><label
-								for="rate5" th:field="*{score}">♥</label>
+							<input type="radio" name="reviewStar" value="5" id="rate1" th:field="*{score}"><label
+								for="rate1">♥</label>
+							<input type="radio" name="reviewStar" value="4" id="rate2" th:field="*{score}"><label
+								for="rate2" >♥</label>
+							<input type="radio" name="reviewStar" value="3" id="rate3" th:field="*{score}"><label
+								for="rate3" >♥</label>
+							<input type="radio" name="reviewStar" value="2" id="rate4" th:field="*{score}"><label
+								for="rate4" >♥</label>
+							<input type="radio" name="reviewStar" value="1" id="rate5" th:field="*{score}"><label
+								for="rate5" >♥</label>
 							</fieldset>
 						</div>
 						
 
 						<div class="col-md-12 text-right">
 							<div class="form-group">
-								<input type="submit" value="확인" class="btn btn-primary btn-modify">
+								<input type="submit" value="수정" class="btn btn-primary btn-modify">
 							</div>
 						</div>
 						</form>
@@ -149,7 +151,7 @@
 	</div>
 	
 	<script>
-		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);;
+		document.getElementById('currentDate').value = new Date().toISOString().substring(0, 20);;
 	</script>
 
 	<!-- jQuery -->

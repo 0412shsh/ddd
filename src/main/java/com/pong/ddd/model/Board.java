@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Date;
-import java.sql.Time;
 
 @Entity //데이터베이스 연동을 위한 모델 클래스
 @Data //롬복
@@ -19,7 +18,7 @@ public class Board {
     private String title;
     private String user_name;
 //    private String user_id;
-    private Date write_date;
+    private String write_date;
     private String content;
     private int score;
 }
