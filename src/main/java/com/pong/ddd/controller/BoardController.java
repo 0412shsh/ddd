@@ -2,11 +2,14 @@ package com.pong.ddd.controller;
 
 import com.pong.ddd.model.Board;
 import com.pong.ddd.repository.BoardRepository;
+import com.pong.ddd.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -16,6 +19,10 @@ public class BoardController {
     // 의존성 주입
     @Autowired
     private BoardRepository boardRepository;
+
+    // validator 의존성 주입
+    @Autowired
+    private BoardValidator boardValidator;
 
     @GetMapping("/list")
     public String list(Model model){
@@ -45,8 +52,12 @@ public class BoardController {
     }
 
     @PostMapping("/form")
-    public String form(@ModelAttribute Board board){
+    public String form(@Valid Board board, BindingResult bindingResult){
         //post 경로를 타게 되면 스프링에서 자동적으로 Board board 안에 자동으로 데이터가 채워지고 이 정보를 가지고 다음 로직 실행
+        boardValidator.validate(board,bindingResult); //체크할 클래스명, bindingResult 전달
+        if (bindingResult.hasErrors()) {
+            return "board/form";
+        }
         //키값에 따라 이미 존재-update, 존재x-insert
         boardRepository.save(board);
         return "redirect:/board/list";
