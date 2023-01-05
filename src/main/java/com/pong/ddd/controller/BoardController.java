@@ -4,6 +4,10 @@ import com.pong.ddd.model.Board;
 import com.pong.ddd.repository.BoardRepository;
 import com.pong.ddd.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,9 +29,15 @@ public class BoardController {
     private BoardValidator boardValidator;
 
     @GetMapping("/list")
-    public String list(Model model){
+    public String list(Model model, @PageableDefault(size = 9) Pageable pageable){
         //list.html에 데이터를 넘겨 주고 싶다. → BoardRepository 사용
-        List<Board> boards = boardRepository.findAll(); // 데이터를 다 가져올수 있다.
+        //Page<Board> boards = boardRepository.findAll(PageRequest.of(0, 20)); // 데이터를 다 가져올수 있다.
+        //boards.getTotalElements();
+        Page<Board> boards = boardRepository.findAll(pageable);
+        int startPage = Math.max(1, boards.getPageable().getPageNumber() -4);
+        int endPage = Math.min(boards.getTotalPages(), boards.getPageable().getPageNumber()+4);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
         model.addAttribute("boards",boards); // model에 담아 html로 보내버리기
 
         return "board/list";

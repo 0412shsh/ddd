@@ -33,14 +33,14 @@
         <aside id="fh5co-hero">
 			<div class="flexslider">
 				<ul class="slides">
-			   	<li style="background-image: url(images/img_bg_2.jpg);">
+			   	<li style="background-image: url(/images/img_bg_4.jpg);">
 			   		<div class="overlay"></div>
 			   		<div class="container-fluid">
 			   			<div class="row">
 				   			<div class="col-md-6 col-md-offset-3 text-center slider-text">
 				   				<div class="slider-text-inner">
-				   					<h1>Board</h1>
-										<h2>Talk with other people.</h2>
+				   					<h1>Read</h1>
+										<h2>There are many stories of you...</h2>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -52,31 +52,61 @@
 		<div id="fh5co-contact">
 			<div class="row animate-box">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>Board</h2>
-					<p>Talk with other people. Let's use the nice words.</p>
+					<h2>Read</h2>
+					<p>What are you going to choose todays' story? </p>
 				</div>
 			</div>
 		<!-- 여기서 부터 board 내용 쓰기 @@@@@@@@@@@@@			-->
-		<div> 총 건수 : <span th:text="${#lists.size(boards)}"></span></div>	
 		
+			<!-- 검색 기능  -->	
+			<form class="form-inline text-right">
+				<div class="form-group mx-sm-3 mb-2">
+				  <label for="searchText" class="sr-only">Search</label>
+				  <input type="text" class="form-control" id="searchText" style="width:250px;height: 40.85px;font-size:30px;">
+				</div>
+				<button type="submit" class="btn btn-light mb-2">Search</button>
+			  </form>
+			  <!-- 검색 기능  -->
+
+			  <div> 총 게시물 : <span th:text="${boards.totalElements}"></span></div>	
+
+
 		  <table class="table table-striped">
 			<thead>
 			  <tr>
-				<th scope="col">글번호</th>
-				<th scope="col">제목</th>
-				<th scope="col">작성자</th>
-				<th scope="col">작성일</th>
+				<th class="text-center" scope="col">글번호</th>
+				<th class="text-center" scope="col">제목</th>
+				<th class="text-center" scope="col">작성자</th>
+				<th class="text-center" scope="col">작성일</th>
 			  </tr>
 			</thead>
 			<tbody>
 			  <tr th:each="board : ${boards}">
-				<th th:text="${board.bno}">1</th>
-				<td><a th:text="${board.title}" th:href="@{/board/form(bno=${board.bno})}">Otto</a></td>
-				<td th:text="${board.user_name}">Mark</td>
-				<td th:text="${board.write_date}">@mdo</td>
+				<th class="text-center" th:text="${board.bno}">1</th>
+				<td class="text-center"><a th:text="${board.title}" th:href="@{/board/form(bno=${board.bno})}">Otto</a></td>
+				<td class="text-center" th:text="${board.user_name}">Mark</td>
+				<td class="text-center" th:text="${board.write_date}">@mdo</td>
 			  </tr>
 			</tbody>
 		  </table>
+
+		  <!-- 페이징 처리 버튼 -->
+		  <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+		  <nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+			  <li class="page-item" th:classappend="${1 == boards.pageable.pageNumber+1} ? 'disabled'">
+				<a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber-1})}">Previous</a></li>
+			  <li class="page-item" th:classappend="${i == boards.pageable.pageNumber+1} ? 'disabled'" th:each="i: ${#numbers.sequence(startPage, endPage)}">
+				<a class="page-link" href="#" th:text="${i}" th:href="@{/board/list(page=${i-1})}">1</a></li>
+			  <li class="page-item" th:classappend="${boards.totalPages == boards.pageable.pageNumber+1} ? 'disabled'">
+				<a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber+1})}">Next</a></li>
+			</ul>
+		  </nav>
+		</div>
+		  <!-- 페이징 처리 버튼 -->
+
+		  
+
 		  <!-- 글쓰기 버튼 -->
 		  <div class="col-md-12">
 			<div class="form-group text-right">
