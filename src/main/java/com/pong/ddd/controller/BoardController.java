@@ -29,11 +29,14 @@ public class BoardController {
     private BoardValidator boardValidator;
 
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(size = 9) Pageable pageable){
+    public String list(Model model, @PageableDefault(size = 9) Pageable pageable,
+                       @RequestParam(required = false, defaultValue = "") String searchText){
         //list.html에 데이터를 넘겨 주고 싶다. → BoardRepository 사용
         //Page<Board> boards = boardRepository.findAll(PageRequest.of(0, 20)); // 데이터를 다 가져올수 있다.
         //boards.getTotalElements();
-        Page<Board> boards = boardRepository.findAll(pageable);
+        //Page<Board> boards = boardRepository.findAll(pageable);
+        Page<Board> boards = boardRepository.findByTitleContainingOrContentContaining(searchText,searchText,pageable);
+
         int startPage = Math.max(1, boards.getPageable().getPageNumber() -4);
         int endPage = Math.min(boards.getTotalPages(), boards.getPageable().getPageNumber()+4);
         model.addAttribute("startPage",startPage);
