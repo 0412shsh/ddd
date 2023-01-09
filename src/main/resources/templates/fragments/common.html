@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head(title)">
 	<meta charset="utf-8">
@@ -79,7 +79,9 @@
 					<div class="col-md-12 col-offset-0 text-center">
 						<div id="fh5co-logo"><a href="index.html" th:href="@{/}">Dear Diary :D</a></div>
 					</div>
+					
 					<div class="col-md-12 col-md-offset-0 text-center menu-1">
+						
 						<ul>
 							<li class="div" th:classappend="${active} == 'home'? 'active'" ><a href="/" th:href="@{/}">Home</a></li>
 							<li><a href="sermons.html">About</a></li>
@@ -92,10 +94,20 @@
 								</ul>
 							</li>
 							<li class=""><a href="#" th:href="@{/}">Community</a></li>
-							<li><a href="contact.html">Mypage</a></li>
-							<li><a href="contact.html">Login</a></li>
-							<li><a href="#" class="donate">Logout</a></li>
-						</ul>
+							<!-- <li><a href="contact.html">Mypage</a></li> -->
+							<li class="has-dropdown" th:classappend="${active} == 'login'? 'active'"><a sec:authorize="!isAuthenticated()" href="contact.html" th:href="@{/account/login}"
+							>Login</a></li>
+							<li class="has-dropdown" th:classappend="${active} == 'register'? 'active'"><a sec:authorize="!isAuthenticated()" href="contact.html" th:href="@{/account/register}"
+							>Join</a></li>
+							</ul>
+							<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+								
+								<span class="mx-2" sec:authentication="name">사용자</span>
+								<span class="mx-2" sec:authentication="principal.authorities">권한</span>
+								<button type="submit">Logout</button>
+								<br>
+								</form>
+									
 					</div>
 				</div>
 				

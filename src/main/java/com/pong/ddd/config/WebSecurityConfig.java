@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/css/**","/fonts/**","/images/**","/js/**","/sass/**").permitAll() //기본적으로 접근할 수 있는 페이지
+                .antMatchers("/","/css/**","/fonts/**","/images/**","/js/**","/sass/**","/account/register").permitAll() //기본적으로 접근할 수 있는 페이지
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
